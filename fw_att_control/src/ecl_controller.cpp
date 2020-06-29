@@ -14,7 +14,7 @@ ECL_Controller::ECL_Controller() :
     integrator_(0.0f),
     rate_error_(0.0f),
     rate_setpoint_(0.0f),
-    body_rate_setpoint(0.0f) {
+    bodyrate_setpoint_(0.0f) {
 
 }
 
@@ -54,7 +54,7 @@ float ECL_Controller::getRateError() {
     return rate_error_;
 }
 
-float ECL_CONTROLLER::getDesiredRate() {
+float ECL_Controller::getDesiredRate() {
     return rate_setpoint_;
 }
 

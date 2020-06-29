@@ -66,7 +66,7 @@ class ECL_Controller {
         float integrator_;
         float rate_error_;
         float rate_setpoint_;
-        float bodyrate_setpoint;
+        float bodyrate_setpoint_;
         float constrainAirspeed(float airspeed, float minspeed, float maxspeed);
 };
 }

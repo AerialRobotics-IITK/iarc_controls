@@ -1,2 +1,2 @@
-#include <mathlib/Limits.hpp>
-#include <mathlib/SearchMin.hpp>
+#include "Limits.hpp"
+#include "SearchMin.hpp"
