@@ -42,7 +42,6 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
     double curr_height;
 
     // Transition Guards
-    // TODO: Cleaner way?
     template<class Event>
     bool isMastVisible(const Event& cmd) {
         return mast_detected;
