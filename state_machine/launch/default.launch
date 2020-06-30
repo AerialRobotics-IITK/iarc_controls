@@ -9,7 +9,7 @@
     </include>
 
     <group ns="$(arg mav_name)">
-        <node pkg="state_machine" type="state_machine_node" name="state_machine_node" output="screen">
+        <node pkg="state_machine" type="agent_state_machine_node" name="agent_state_machine" output="screen">
             <rosparam file="$(find state_machine)/cfg/params.yaml" command="load"/>
             <remap from="odometry" to="ground_truth/odometry"/>
         </node>

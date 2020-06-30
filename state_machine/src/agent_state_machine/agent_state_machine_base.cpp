@@ -1,9 +1,9 @@
+#include <agent_state_machine/agent_state_machine_base.hpp>
 #include <geometry_msgs/PoseStamped.h>
-#include <state_machine/state_machine_base.hpp>
 
-namespace ariitk::state_machine {
+namespace ariitk::agent_state_machine {
 
-void FSMBase::init(ros::NodeHandle& nh, ros::NodeHandle& nh_private) {
+void StateMachineBase::init(ros::NodeHandle& nh, ros::NodeHandle& nh_private) {
     nh_private.getParam("verbose/transition", verbose_);
     nh_private.getParam("hover_height", hover_height_);
     nh_private.getParam("land_height", land_height_);
@@ -11,16 +11,16 @@ void FSMBase::init(ros::NodeHandle& nh, ros::NodeHandle& nh_private) {
     has_payload = true;
     mast_detected = false;
 
-    odom_sub_ = nh.subscribe("odometry", 1, &FSMBase::odometryCallback, this);
+    odom_sub_ = nh.subscribe("odometry", 1, &StateMachineBase::odometryCallback, this);
     cmd_pose_pub_ = nh.advertise<geometry_msgs::PoseStamped>("command/pose", 1);
 }
 
-void FSMBase::takeoff(const Takeoff& cmd) {
+void StateMachineBase::takeoff(const Takeoff& cmd) {
     echo("Taking off!");
     publishPoseCommand(mav_pose_.position.x, mav_pose_.position.y, hover_height_);
 }
 
-void FSMBase::findMast(const Search& cmd) {
+void StateMachineBase::findMast(const Search& cmd) {
     echo("Searching for Mast...");
     mast_detected = true;
 
@@ -29,7 +29,7 @@ void FSMBase::findMast(const Search& cmd) {
     }
 }
 
-void FSMBase::detachBlock(const RemoveBlock& cmd) {
+void StateMachineBase::detachBlock(const RemoveBlock& cmd) {
     echo("Removing block on mast...");
     mast_detected = false;
 
@@ -38,7 +38,7 @@ void FSMBase::detachBlock(const RemoveBlock& cmd) {
     }
 }
 
-void FSMBase::attachBlock(const PlaceBlock& cmd) {
+void StateMachineBase::attachBlock(const PlaceBlock& cmd) {
     echo("Placing block on mast...");
     has_payload = false;
 
@@ -47,17 +47,17 @@ void FSMBase::attachBlock(const PlaceBlock& cmd) {
     }
 }
 
-void FSMBase::hover(const Hold& cmd) {
+void StateMachineBase::hover(const Hold& cmd) {
     echo("In Position Hold");
     publishPoseCommand(mav_pose_.position.x, mav_pose_.position.y, cmd.hold_height);
 }
 
-void FSMBase::land(const Terminate& cmd) {
+void StateMachineBase::land(const Terminate& cmd) {
     echo("Landing!");
     publishPoseCommand(mav_pose_.position.x, mav_pose_.position.y, land_height_);
 }
 
-void FSMBase::publishPoseCommand(const double& x, const double& y, const double& z) {
+void StateMachineBase::publishPoseCommand(const double& x, const double& y, const double& z) {
     geometry_msgs::PoseStamped cmd_msg;
 
     cmd_msg.header.stamp = ros::Time::now();
@@ -68,4 +68,4 @@ void FSMBase::publishPoseCommand(const double& x, const double& y, const double&
     cmd_pose_pub_.publish(cmd_msg);
 }
 
-}  // namespace ariitk::state_machine
+}  // namespace ariitk::agent_state_machine

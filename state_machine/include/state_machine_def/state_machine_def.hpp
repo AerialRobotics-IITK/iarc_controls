@@ -17,7 +17,7 @@ namespace ariitk::state_machine {
 template<class FSMClass>
 class FSMDef : public boost::msm::front::state_machine_def<FSMClass> {
   public:
-    typedef boost::msm::back::state_machine<FSMClass> FSMBackend;
+    typedef boost::msm::back::state_machine<FSMClass> StateMachineBackend;
     typedef boost::msm::active_state_switch_after_transition_action active_state_switch_policy;
 
     template<class Event, class FSM>

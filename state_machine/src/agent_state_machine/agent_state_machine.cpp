@@ -1,11 +1,11 @@
-#include <state_machine/state_machine.hpp>
+#include <agent_state_machine/agent_state_machine.hpp>
 
 #include <future>
 #include <std_msgs/String.h>
 
-namespace ariitk::state_machine {
+namespace ariitk::agent_state_machine {
 
-FiniteStateMachine::FiniteStateMachine(ros::NodeHandle& nh, ros::NodeHandle& nh_private) {
+AgentStateMachine::AgentStateMachine(ros::NodeHandle& nh, ros::NodeHandle& nh_private) {
     nh_private.getParam("poll_rate", poll_rate_);
     nh_private.getParam("verbose/state", verbose_);
 
@@ -18,7 +18,7 @@ FiniteStateMachine::FiniteStateMachine(ros::NodeHandle& nh, ros::NodeHandle& nh_
     machine_.process_event(Takeoff());
 }
 
-void FiniteStateMachine::spin() {
+void AgentStateMachine::spin() {
     auto state_publish_thread = std::async(std::launch::async, [this] { publishCurrState(); });
 
     // First, look for the mast
@@ -34,13 +34,13 @@ void FiniteStateMachine::spin() {
 }
 
 template<class Event>
-void FiniteStateMachine::performTask() {
+void AgentStateMachine::performTask() {
     // since every task must come back to hover, these two calls are always together
     machine_.process_event(Event());
     machine_.process_event(Hold(curr_height));  // hover at the current height by default
 }
 
-void FiniteStateMachine::publishCurrState() {
+void AgentStateMachine::publishCurrState() {
     ros::Rate loop_rate(poll_rate_);
 
     std_msgs::String state_msg;
@@ -52,4 +52,4 @@ void FiniteStateMachine::publishCurrState() {
     }
 }
 
-}  // namespace ariitk::state_machine
+}  // namespace ariitk::agent_state_machine

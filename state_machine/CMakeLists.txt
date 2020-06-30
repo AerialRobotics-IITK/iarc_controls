@@ -7,11 +7,13 @@ catkin_simple(ALL_DEPS_REQUIRED)
 add_definitions(-std=c++17)
 set(CMAKE_BUILD_TYPE Release)
 
-cs_add_library(${PROJECT_NAME}_lib
-    src/state_machine_base.cpp
-    src/state_machine.cpp
-)
-target_link_libraries(${PROJECT_NAME}_lib ${catkin_LIBRARIES})
+set(ASM agent_state_machine)
 
-cs_add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
-target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME}_lib)
+cs_add_library(${ASM}_lib
+    src/${ASM}/${ASM}_base.cpp
+    src/${ASM}/${ASM}.cpp
+)
+target_link_libraries(${ASM}_lib ${catkin_LIBRARIES})
+
+cs_add_executable(${ASM}_node src/${ASM}/${ASM}_node.cpp)
+target_link_libraries(${ASM}_node ${ASM}_lib)
