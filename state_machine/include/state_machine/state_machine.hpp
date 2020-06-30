@@ -11,6 +11,8 @@ class FiniteStateMachine : public FSMBase {
 
   private:
     void publishCurrState();
+    template<class Event>
+    void performTask();
 
     FSMBackend machine_;
 

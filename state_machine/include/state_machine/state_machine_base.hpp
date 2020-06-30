@@ -11,6 +11,7 @@ class FSMBase : public FSMDef<FSMBase> {
     void spin();
 
     // State names
+    // TODO: Test if the order of names is correct
     std::vector<std::string> state_names = {"Rest", "Hover", "Explore", "Detach", "Attach"};
 
     // State definitions

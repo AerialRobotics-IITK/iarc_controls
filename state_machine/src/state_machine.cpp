@@ -19,22 +19,25 @@ FiniteStateMachine::FiniteStateMachine(ros::NodeHandle& nh, ros::NodeHandle& nh_
 }
 
 void FiniteStateMachine::spin() {
-    // TODO: try enqueue for a cleaner impl
     auto state_publish_thread = std::async(std::launch::async, [this] { publishCurrState(); });
 
     // First, look for the mast
-    machine_.process_event(Search());  // exits when mast is found
-    machine_.process_event(Hold());
+    performTask<Search>();  // exits when mast is found
     // Second, remove the existing block
-    machine_.process_event(RemoveBlock());  // exits once block is removed
-    machine_.process_event(Hold());
+    performTask<RemoveBlock>();  // exits once block is removed
     // Now, attach payload in place of the block
-    machine_.process_event(PlaceBlock());  // exits once block is in place
-    machine_.process_event(Hold());
+    performTask<PlaceBlock>();  // exits once block is in place
     // Die!
     machine_.process_event(Terminate());
 
     machine_.stop();
+}
+
+template<class Event>
+void FiniteStateMachine::performTask() {
+    // since every task must come back to hover, these two calls are always together
+    machine_.process_event(Event());
+    machine_.process_event(Hold());
 }
 
 void FiniteStateMachine::publishCurrState() {
