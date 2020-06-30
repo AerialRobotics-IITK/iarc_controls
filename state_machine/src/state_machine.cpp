@@ -37,7 +37,7 @@ template<class Event>
 void FiniteStateMachine::performTask() {
     // since every task must come back to hover, these two calls are always together
     machine_.process_event(Event());
-    machine_.process_event(Hold());
+    machine_.process_event(Hold(curr_height));  // hover at the current height by default
 }
 
 void FiniteStateMachine::publishCurrState() {

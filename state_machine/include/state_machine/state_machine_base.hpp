@@ -28,12 +28,18 @@ class FSMBase : public FSMDef<FSMBase> {
     struct Search : public Command {};
     struct RemoveBlock : public Command {};
     struct PlaceBlock : public Command {};
-    struct Hold : public Command {};
     struct Terminate : public Command {};
+    struct Hold : public Command {
+        Hold(const double& height)
+            : hold_height(height) {
+        }
+        double hold_height;
+    };
 
     // Guard variables
     bool has_payload;
     bool mast_detected;
+    double curr_height;
 
     // Transition Guards
     // TODO: Cleaner way?
@@ -87,6 +93,7 @@ class FSMBase : public FSMDef<FSMBase> {
     void publishPoseCommand(const double& x, const double& y, const double& z);
     void odometryCallback(const nav_msgs::Odometry& odom) {
         mav_pose_ = odom.pose.pose;
+        curr_height = mav_pose_.position.z;
     }
 
     geometry_msgs::Pose mav_pose_;

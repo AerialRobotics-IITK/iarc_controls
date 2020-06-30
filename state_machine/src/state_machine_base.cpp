@@ -47,9 +47,9 @@ void FSMBase::attachBlock(const PlaceBlock& cmd) {
     }
 }
 
-void FSMBase::hover(const Hold& cmd) {  // TODO: take hover height from command
+void FSMBase::hover(const Hold& cmd) {
     echo("In Position Hold");
-    publishPoseCommand(mav_pose_.position.x, mav_pose_.position.y, hover_height_);
+    publishPoseCommand(mav_pose_.position.x, mav_pose_.position.y, cmd.hold_height);
 }
 
 void FSMBase::land(const Terminate& cmd) {
