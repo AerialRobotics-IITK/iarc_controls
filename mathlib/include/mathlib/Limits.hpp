@@ -45,6 +45,7 @@
 
 #ifndef MATH_PI
 #define MATH_PI		3.141592653589793238462643383280
+#define M_TWOPI		6.28318531
 #endif
 
 namespace math
@@ -95,6 +96,32 @@ inline bool isZero(float val) {
 /** Safe way to check if double is zero */
 inline bool isZero(double val) {
 	return fabs(val - 0.0) < DBL_EPSILON;
+}
+
+template<typename Type>
+Type wrap(Type x, Type low, Type high) {
+    // already in range
+    if (low <= x && x < high) {
+        return x;
+    }
+
+    const Type range = high - low;
+    const Type inv_range = Type(1) / range; // should evaluate at compile time, multiplies below at runtime
+    const Type num_wraps = floor((x - low) * inv_range);
+    return x - range * num_wraps;
+}
+
+template<typename Type>
+Type wrapPi(Type x) {
+    return wrap(x, Type(-MATH_PI), Type(MATH_PI));
+}
+
+/**
+ * Wrap value in range [0, 2π)
+ */
+template<typename Type>
+Type wrap2Pi(Type x) {
+    return wrap(x, Type(0), Type(M_TWOPI));
 }
 
 }
