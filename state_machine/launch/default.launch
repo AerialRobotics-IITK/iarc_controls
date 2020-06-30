@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="mav_name" default="firefly"/>
+    <arg name="world_name" default="default"/>
+
+    <include file="$(find iarc_simulation_tools)/launch/default.launch">
+        <arg name="mav_name" value="$(arg mav_name)"/>
+        <arg name="world_name" default="$(arg world_name)"/>
+    </include>
+
+    <group ns="$(arg mav_name)">
+        <node pkg="state_machine" type="state_machine_node" name="state_machine_node" output="screen">
+            <rosparam file="$(find state_machine)/cfg/params.yaml" command="load"/>
+            <remap from="odometry" to="ground_truth/odometry"/>
+        </node>
+    </group>
+</launch>

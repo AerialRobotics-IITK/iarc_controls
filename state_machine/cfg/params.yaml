@@ -1,0 +1,5 @@
+poll_rate: 10
+verbose:
+  state: true
+  transition: true
+hover_height: 5.0
