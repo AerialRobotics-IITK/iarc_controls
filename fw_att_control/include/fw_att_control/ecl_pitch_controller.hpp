@@ -34,5 +34,5 @@ class ECL_PitchController : public ECL_Controller {
     protected:
         float max_rate_neg_{0.0f};
         float roll_ff_{0.0f};
-}
+};
 }
