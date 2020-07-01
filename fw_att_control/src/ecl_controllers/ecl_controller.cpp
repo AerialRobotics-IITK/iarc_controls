@@ -43,7 +43,7 @@ void ECL_Controller::setIntegratorMax(float max) {
 }
 
 void ECL_Controller::setMaxRate(float max_rate) {
-    max_rate = max_rate;
+    max_rate_ = max_rate;
 }
 
 void ECL_Controller::setBodyRateSetpoint(float rate) {
