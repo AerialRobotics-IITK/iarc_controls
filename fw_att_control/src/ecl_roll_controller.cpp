@@ -50,7 +50,7 @@ float ECL_RollController::controlBodyRate(const ECL_ControlData &ctl_data) {
             id = math::min(id, 0.0f);
         }
 
-        integrator_ = math::constrain(integrator_ + id*k_i_, -integrator_max, integrator_max);
+        integrator_ = math::constrain(integrator_ + id*k_i_, -integrator_max_, integrator_max_);
     }
 
     last_output_ = bodyrate_setpoint_ * k_ff_ * ctl_data.scaler + 
@@ -66,6 +66,6 @@ float ECL_RollController::controlEulerRate(const ECL_ControlData &ctl_data) {
 
     setBodyRateSetpoint(bodyrate_setpoint_);
 
-    return controlBodyRateSetpoint(ctl_data);
+    return controlBodyRate(ctl_data);
 }
 }

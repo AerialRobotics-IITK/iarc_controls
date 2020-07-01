@@ -43,10 +43,10 @@
 #include <sys/types.h>
 #include <stdbool.h>
 #include <inttypes.h>
-
 // #include <misc/time.h>
 #include <misc/queue.h>
 #include <misc/visibility.h>
+
 __BEGIN_DECLS
 
 /**

@@ -12,7 +12,7 @@ float ECL_YawController::controlAttitude(const ECL_ControlData &ctl_data) {
         default:
             static hrt_abstime last_print = 0;
 
-            if(rt_elapsed_time(&last_print) > 5e6) {
+            if(hrt_elapsed_time(&last_print) > 5e6) {
                 std::cout<<"invalid param setting ";
                 last_print = hrt_absolute_time();
             }
@@ -56,7 +56,7 @@ float ECL_YawController::controlAttitudeIMPLOpenLoop(const ECL_ControlData &ctl_
     if(!inverted) {
         // Calculate desired yaw rate from coordinated turn constraint / (no side forces)
         rate_setpoint_ = tanf(constrained_roll) * cosf(ctl_data.pitch) * CONSTANTS_ONE_G;
-        rate_setpoint /= (ctl_data.airspeed < ctl_data.airspeed_min ? ctl_data.airspeed_min : ctl_data.airspeed);
+        rate_setpoint_ /= (ctl_data.airspeed < ctl_data.airspeed_min ? ctl_data.airspeed_min : ctl_data.airspeed);
     }
 
     if(!ISFINITE(rate_setpoint_)) {
@@ -75,7 +75,7 @@ float ECL_YawController::controlBodyRate(const ECL_ControlData &ctl_data) {
 		return math::constrain(last_output_, -1.0f, 1.0f);
 	}
 
-    uint64_t = dt_micros = hrt_elapsed_time(&last_run_);
+    uint64_t dt_micros = hrt_elapsed_time(&last_run_);
     last_run_ = hrt_absolute_time();
     float dt = (float)dt_micros * 1e-6f;
 
@@ -112,7 +112,7 @@ float ECL_YawController::controlBodyRate(const ECL_ControlData &ctl_data) {
             id = math::min(id, 0.0f);
         }
 
-        last_output_ = (bodyrate_setpoint_ * k_ff_ + rate_error_ * k_p_ + integrator) * ctl_data.scaler * ctl_data.scaler;
+        last_output_ = (bodyrate_setpoint_ * k_ff_ + rate_error_ * k_p_ + integrator_) * ctl_data.scaler * ctl_data.scaler;
         return math::constrain(last_output_, -1.0f, 1.0f);
     }
 }

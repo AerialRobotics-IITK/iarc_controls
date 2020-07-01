@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <iostream>
 #include <fw_att_control/defines.hpp>
 #include <mathlib/math.hpp>
 #include <drivers/drv_hrt.h>
@@ -45,7 +46,7 @@ class ECL_Controller {
         void setKff(float k_ff);
         void setIntegratorMax(float max);
         void setMaxRate(float max_rate);
-        void setBodyRateSetpoint( float rate);
+        void setBodyRateSetpoint(float rate);
 
         //Getters
         float getRateError();

@@ -2,7 +2,7 @@
 
 namespace ariitk::fw_att_control {
 
-ECL_PitchController::controlAttitude(const ECL_ControlData &ctl_data) {
+float ECL_PitchController::controlAttitude(const ECL_ControlData &ctl_data) {
     /* Do not calculate control signal with bad inputs */
     if (!(ISFINITE(ctl_data.pitch_setpoint) &&
 	      ISFINITE(ctl_data.roll) &&
@@ -20,7 +20,7 @@ ECL_PitchController::controlAttitude(const ECL_ControlData &ctl_data) {
     return rate_setpoint_;
 }
 
-ECL_PitchController::controlBodyRate(const ECL_ControlData &ctl_data) {
+float ECL_PitchController::controlBodyRate(const ECL_ControlData &ctl_data) {
 
     /* Do not calculate control signal with bad inputs */
 	if (!(ISFINITE(ctl_data.roll) &&
@@ -61,7 +61,7 @@ ECL_PitchController::controlBodyRate(const ECL_ControlData &ctl_data) {
             id = math::min(id, 0.0f);
         }
 
-        integrator_ = math::constrain(untegrator_ + id*k_i_, -integrator_max_, integrator_max_);
+        integrator_ = math::constrain(integrator_ + id*k_i_, -integrator_max_, integrator_max_);
     }
 
     /* Apply PI rate controller and store non-limited output */
@@ -69,7 +69,7 @@ ECL_PitchController::controlBodyRate(const ECL_ControlData &ctl_data) {
                    rate_error_*k_p_*ctl_data.scaler*ctl_data.scaler + 
                    integrator_; //scaler is proportional to 1/airspeed
 
-    return math::constrain(last_output, -1.0f, 1.0f);
+    return math::constrain(last_output_, -1.0f, 1.0f);
 }
 
 float ECL_PitchController::controlEulerRate(const ECL_ControlData &ctl_data) {

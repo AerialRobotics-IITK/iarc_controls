@@ -28,7 +28,7 @@ class ECL_PitchController : public ECL_Controller {
         }
 
         void setRollff(float roll_ff) {
-            roll_ff_ = rol_ff;
+            roll_ff_ = roll_ff;
         }
 
     protected:

@@ -25,7 +25,7 @@ float ECL_WheelController::controlBodyRate(const ECL_ControlData &ctl_data) {
     // body angular rate error
     rate_error_ = rate_setpoint_ - ctl_data.body_z_rate; 
 
-    if(!lock_integrator && k_i_ > 0.0f && ctl_data.groundspeed > minspeed) {
+    if(!lock_integrator && k_i_ > 0.0f && ctl_data.groundspeed > min_speed) {
         float id = rate_error_ * dt * ctl_data.groundspeed_scaler;
 
         if(last_output_ < -1.0f) {
@@ -58,7 +58,7 @@ float ECL_WheelController::controlAttitude(const ECL_ControlData &ctl_data) {
 
     if(max_rate_ > 0.01f) {
         if(rate_setpoint_ > 0.0f) {
-            rate_setpoint_ = (rate_setpoint > max_rate_) ? max_rate_ : rate_setpoint_;
+            rate_setpoint_ = (rate_setpoint_ > max_rate_) ? max_rate_ : rate_setpoint_;
         }
         else {
             rate_setpoint_ = (rate_setpoint_ < -max_rate_) ? -max_rate_ : rate_setpoint_;
