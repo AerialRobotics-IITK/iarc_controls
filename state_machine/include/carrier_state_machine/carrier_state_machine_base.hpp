@@ -1,5 +1,6 @@
 #pragma once
 
+#include <geometry_msgs/PoseStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <state_machine_def/state_machine_def.hpp>
 

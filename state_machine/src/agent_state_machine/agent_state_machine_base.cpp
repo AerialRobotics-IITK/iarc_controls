@@ -1,5 +1,4 @@
 #include <agent_state_machine/agent_state_machine_base.hpp>
-#include <geometry_msgs/PoseStamped.h>
 
 namespace ariitk::agent_state_machine {
 

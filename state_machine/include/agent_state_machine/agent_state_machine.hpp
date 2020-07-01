@@ -1,6 +1,8 @@
 #pragma once
 
 #include <agent_state_machine/agent_state_machine_base.hpp>
+#include <future>
+#include <std_msgs/String.h>
 
 namespace ariitk::agent_state_machine {
 

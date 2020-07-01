@@ -1,5 +1,4 @@
 #include <carrier_state_machine/carrier_state_machine_base.hpp>
-#include <geometry_msgs/PoseStamped.h>
 
 namespace ariitk::carrier_state_machine {
 
