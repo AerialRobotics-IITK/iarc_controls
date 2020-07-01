@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <fw_att_control/defines.hpp>
 #include <mathlib/math.hpp>
+#include <drivers/drv_hrt.h>
 
 namespace ariitk::fw_att_control {
 struct ECL_ControlData {
