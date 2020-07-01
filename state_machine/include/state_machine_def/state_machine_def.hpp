@@ -25,12 +25,12 @@ class FSMDef : public boost::msm::front::state_machine_def<FSMClass> {
     template<class Event, class FSM>
     void on_exit(Event const&, FSM&){};
 
-    template<class T>
+    template<class T, bool V = false>
     struct State : public boost::msm::front::state<> {
-        State(const bool& flag = true) {  // FIXME: How to make this settable?
+        State() {
             int status;
             state_name = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);  // TODO: Discard namespacing
-            verbose = flag;
+            verbose = V;
         }
 
         template<class Event, class FSM>
