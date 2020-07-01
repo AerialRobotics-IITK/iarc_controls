@@ -12,7 +12,6 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
     void spin();
 
     // State names
-    // TODO: Test if the order of names is correct
     std::vector<std::string> state_names = {"Rest", "Hover", "Mission", "Deploy"};
 
     // State definitions
@@ -80,10 +79,7 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
 
   private:
     void publishPoseCommand(const double& x, const double& y, const double& z);
-    void odometryCallback(const nav_msgs::Odometry& odom) {
-        mav_pose_ = odom.pose.pose;
-        curr_height = mav_pose_.position.z;
-    }
+    void odometryCallback(const nav_msgs::Odometry& odom);
 
     geometry_msgs::Pose mav_pose_;
 

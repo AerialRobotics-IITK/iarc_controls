@@ -19,7 +19,7 @@ void CarrierStateMachine::spin() {
     auto state_publish_thread = std::async(std::launch::async, [this] { publishCurrState(); });
 
     // First, get to the ship
-    performTask<Travel>();  // exits when planned trajecotry is complete
+    performTask<Travel>();  // exits when planned trajectory is complete
     // Second, deploy the agent to do its work
     performTask<Detach>();  // exits once agent has detached
     // Now, return to takeoff zone

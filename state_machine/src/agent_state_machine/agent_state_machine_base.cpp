@@ -14,7 +14,7 @@ void StateMachineBase::init(ros::NodeHandle& nh, ros::NodeHandle& nh_private) {
     cmd_pose_pub_ = nh.advertise<geometry_msgs::PoseStamped>("command/pose", 1);
 }
 
-void StateMachineBase::takeoff(const Takeoff& cmd) {
+void StateMachineBase::initialize(const Initialize& cmd) {
     echo("Taking off!");
     publishPoseCommand(mav_pose_.position.x, mav_pose_.position.y, hover_height_);
 }
@@ -33,7 +33,7 @@ void StateMachineBase::detachBlock(const RemoveBlock& cmd) {
     mast_detected = false;
 
     while (ros::ok() && mast_detected) {
-        // TOOD: Behaviour to yank existing block out
+        // TODO: Behaviour to yank existing block out
     }
 }
 
@@ -65,6 +65,11 @@ void StateMachineBase::publishPoseCommand(const double& x, const double& y, cons
     cmd_msg.pose.position.z = z;
 
     cmd_pose_pub_.publish(cmd_msg);
+}
+
+void StateMachineBase::odometryCallback(const nav_msgs::Odometry& odom) {
+    mav_pose_ = odom.pose.pose;
+    curr_height = mav_pose_.position.z;
 }
 
 }  // namespace ariitk::agent_state_machine

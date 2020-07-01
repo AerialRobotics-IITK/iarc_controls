@@ -12,7 +12,7 @@ AgentStateMachine::AgentStateMachine(ros::NodeHandle& nh, ros::NodeHandle& nh_pr
     state_pub_ = nh_private.advertise<std_msgs::String>("curr_state", 1);
 
     // Fly!
-    machine_.process_event(Takeoff());
+    machine_.process_event(Initialize());
 }
 
 void AgentStateMachine::spin() {

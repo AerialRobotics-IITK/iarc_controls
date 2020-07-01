@@ -59,4 +59,9 @@ void StateMachineBase::publishPoseCommand(const double& x, const double& y, cons
     cmd_pose_pub_.publish(cmd_msg);
 }
 
+void StateMachineBase::odometryCallback(const nav_msgs::Odometry& odom) {
+    mav_pose_ = odom.pose.pose;
+    curr_height = mav_pose_.position.z;
+}
+
 }  // namespace ariitk::carrier_state_machine

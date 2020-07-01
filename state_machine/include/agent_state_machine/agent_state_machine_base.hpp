@@ -12,7 +12,6 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
     void spin();
 
     // State names
-    // TODO: Test if the order of names is correct
     std::vector<std::string> state_names = {"Rest", "Hover", "Explore", "Detach", "Attach"};
 
     // State definitions
@@ -25,7 +24,7 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
     typedef Rest initial_state;
 
     // Transition events
-    struct Takeoff : public Command {};
+    struct Initialize : public Command {};
     struct Search : public Command {};
     struct RemoveBlock : public Command {};
     struct PlaceBlock : public Command {};
@@ -58,7 +57,7 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
     }
 
     // Transition actions
-    void takeoff(const Takeoff& cmd);
+    void initialize(const Initialize& cmd);
     void findMast(const Search& cmd);
     void hover(const Hold& cmd);
     void detachBlock(const RemoveBlock& cmd);
@@ -70,7 +69,7 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
         : boost::mpl::vector<
               //      Type     Start          Event          Next            Action                         Guard
               // +++ ------ + --------- + ------------- + --------- + -------------------------------- + ----------------------------------- +++
-                     a_row<    Rest     ,  Takeoff      ,  Hover    ,  &StateMachineBase::takeoff                                             >,
+                     a_row<    Rest     ,  Initialize   ,  Hover    ,  &StateMachineBase::initialize                                             >,
               // +++ ------ + --------- + ------------- + --------- + -------------------------------- + ----------------------------------- +++
                        row<    Hover    ,  Search       ,  Explore  ,  &StateMachineBase::findMast     ,  &StateMachineBase::needMastSearch   >,
               // +++ ------ + --------- + ------------- + --------- + -------------------------------- + ----------------------------------- +++
@@ -91,10 +90,7 @@ class StateMachineBase : public ariitk::state_machine::FSMDef<StateMachineBase> 
 
   private:
     void publishPoseCommand(const double& x, const double& y, const double& z);
-    void odometryCallback(const nav_msgs::Odometry& odom) {
-        mav_pose_ = odom.pose.pose;
-        curr_height = mav_pose_.position.z;
-    }
+    void odometryCallback(const nav_msgs::Odometry& odom);
 
     geometry_msgs::Pose mav_pose_;
 
