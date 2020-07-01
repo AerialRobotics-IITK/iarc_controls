@@ -11,11 +11,11 @@ add_definitions(-std=c++17)
 set(CMAKE_BUILD_TYPE Release)
 
 cs_add_library(ECL_lib 
-    src/ecl_controller.cpp
-    src/ecl_pitch_controller.cpp
-    src/ecl_roll_controller.cpp
-    src/ecl_wheel_controller.cpp
-    src/ecl_yaw_controller.cpp
+    src/ecl_controllers/ecl_controller.cpp
+    src/ecl_controllers/ecl_pitch_controller.cpp
+    src/ecl_controllers/ecl_roll_controller.cpp
+    src/ecl_controllers/ecl_wheel_controller.cpp
+    src/ecl_controllers/ecl_yaw_controller.cpp
 )
 target_link_libraries(ECL_lib ${mathlib_LIBRARIES})
 

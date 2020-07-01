@@ -1,4 +1,4 @@
-#include <fw_att_control/ecl_pitch_controller.hpp>
+#include <ecl_controllers/ecl_pitch_controller.hpp>
 
 namespace ariitk::fw_att_control {
 

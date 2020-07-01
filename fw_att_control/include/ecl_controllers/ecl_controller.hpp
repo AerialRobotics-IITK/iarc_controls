@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 #include <iostream>
-#include <fw_att_control/defines.hpp>
+#include <misc/defines.hpp>
 #include <mathlib/math.hpp>
 #include <drivers/drv_hrt.h>
 
