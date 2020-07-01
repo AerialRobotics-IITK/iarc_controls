@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="mav_name" default="firefly"/>
+    <arg name="is_agent" default="false"/>
     <arg name="world_name" default="default"/>
 
     <include file="$(find iarc_simulation_tools)/launch/default.launch">
@@ -8,15 +9,18 @@
         <arg name="world_name" default="$(arg world_name)"/>
     </include>
 
-    <!-- TODO: enable only one of the two nodes at a time -->
     <group ns="$(arg mav_name)">
-        <node pkg="state_machine" type="agent_state_machine_node" name="agent_state_machine" output="screen">
-            <rosparam file="$(find state_machine)/cfg/params.yaml" command="load"/>
-            <remap from="odometry" to="ground_truth/odometry"/>
-        </node>
-        <node pkg="state_machine" type="carrier_state_machine_node" name="carrier_state_machine" output="screen">
-            <rosparam file="$(find state_machine)/cfg/params.yaml" command="load"/>
-            <remap from="odometry" to="ground_truth/odometry"/>
-        </node>
+        <group if="$(arg is_agent)">
+            <node pkg="state_machine" type="agent_state_machine_node" name="agent_state_machine" output="screen">
+                <rosparam file="$(find state_machine)/cfg/params.yaml" command="load"/>
+                <remap from="odometry" to="ground_truth/odometry"/>
+            </node>
+        </group>
+        <group unless="$(arg is_agent)">
+            <node pkg="state_machine" type="carrier_state_machine_node" name="carrier_state_machine" output="screen">
+                <rosparam file="$(find state_machine)/cfg/params.yaml" command="load"/>
+                <remap from="odometry" to="ground_truth/odometry"/>
+            </node>
+        </group>
     </group>
 </launch>
