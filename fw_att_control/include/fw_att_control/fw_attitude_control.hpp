@@ -8,6 +8,7 @@
 #include <msg/vehicle_attitude.h>
 #include <msg/vehicle_attitude_setpoint.h>
 #include <msg/battery_status.h>
+#include <msg/vehicle_local_position.h>
 #include <msg/manual_control_setpoint.h>
 #include <msg/parameter_update.h>
 #include <msg/vehicle_rates_setpoint.h>
